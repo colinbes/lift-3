@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+<title>Test</title>
+</head>
+<body data-lift-content-id="main">
+	<div id="main" data-ng-app="foboDemoApp" data-lift="surround?with=default;at=content">
+		<div class="lift:Page2Snippet">
+			<div data-ng-controller="ModelRTCtrl">
+				<pre>{{lrtResModel1}}</pre>
+				<button type="button" class="btn btn-default"
+					    data-ng-click="doRT1()">RT1</button>
+				<button type="button" class="btn btn-default"
+					    data-ng-click="doReset1()">Reset</button>
+				<hr>
+				<pre>{{lrtResModel2}}</pre>
+				<button type="button" class="btn btn-default"
+					    data-ng-click="doRT2()">RT2</button>
+				<button type="button" class="btn btn-default"
+					    data-ng-click="doReset2()">Reset</button>
+			</div>			
+		</div>
+	</div>
+</body>
+</html>
+

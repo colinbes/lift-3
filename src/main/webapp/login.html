@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+<title>Login</title>
+</head>
+<body data-lift-content-id="main">
+	<div id="main" data-lift="surround?with=default;at=content">
+		<div id="login" class="lift:LoginSnippet">
+			<div class="row">
+				<div class="col-sm-6 col-sm-offset-3 col-md-4 col-md-offset-4">
+					<form method="post" role="form">
+						<fieldset>
+							<div class="form-group required">
+								<label class="sr-only" for="org">Email</label>
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-envelope"></i></span> <input class="form-control" type="text" name="email"
+										id="email" placeholder="eMail">
+								</div>
+							</div>
+							<div class="form-group required">
+								<label class="sr-only" for="org">Password</label>
+								<div class="input-group">
+									<span class="input-group-addon"><i class="fa fa-key"></i></span> <input class="form-control" type="password" name="password"
+										id="password" placeholder="Password">
+								</div>
+							</div>
+							<div>
+								<button id="submit" type="submit" class="btn btn-primary btn-small">Login</button>
+								<small class="muted"> <input id="remember" type="checkbox" name="save" value="false" /> <label for="remember"
+									style="font-weight: normal">
+										<div class="lift:loc?locid=login.save.details">Save details</div>
+								</label>
+								</small>
+							</div>
+							<span id="setfocus"></span>
+						</fieldset>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+

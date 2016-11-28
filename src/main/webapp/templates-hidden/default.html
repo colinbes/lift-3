@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:lift="http://liftweb.net/">
+<head>
+<meta http-equiv="content-type" content="text/html; charset=UTF-8" />
+<meta name="description" content="" />
+<meta name="keywords" content="" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title class="lift:Menu.title">App:</title>
+
+<!-- Strictly speaking we should us an icon file with both 16x16 and 32x32 embedded -->
+<link rel="icon" href="/assets/images/favicon.png">
+
+<link rel="apple-touch-icon-precomposed" href="path/to/favicon-152.png">
+
+<link href="/classpath/fobo/bootstrap.css" rel="stylesheet" type="text/css" />
+<link href="/classpath/fobo/bootstrap-theme.css" rel="stylesheet" type="text/css" />
+<link href="/classpath/fobo/font-awesome.css" rel="stylesheet" type="text/css" />
+<link href="/assets/css/mystyles.css" rel="stylesheet" type="text/css" />
+<script src="/classpath/fobo/jquery.js" id="jquery" type="text/javascript"></script>
+<script src="/classpath/fobo/bootstrap.js" id="bootstrap" type="text/javascript"></script>
+<script src="/classpath/fobo/angular.js" id="angular" type="text/javascript"></script>
+<script src="/classpath/fobo/angular-animate.js" id="angular-animate" type="text/javascript"></script>
+<script src="/classpath/fobo/ui-bootstrap-tpls.js" id="ui-bootstrap-tpls" type="text/javascript"></script>
+<script src="/assets/app.js"></script>
+<script src="/assets/controllers.js"></script>
+</head>
+<body>
+	<span data-lift='embed?what=_embeddedTopNavbar'>Embedding the TopNavbar here</span>
+	<div style="position: absolute; top: 50%; left: 50%">
+		<img alt="" id="ajax-loader" style="z-index: 1; display: none; margin-bottom: 0px; margin-left: 5px" src="/assets/images/ajax-loader.gif" />
+	</div>
+	
+	<span data-lift='embed?what=_embeddedNotices'>embed notices</span>
+	
+ 	<div class="container-fluid">
+		<div id="content" class="content-body">The main content will get bound here</div>
+	</div>
+	<!-- container -->
+
+	<footer class="hidden-print text-muted" style="text-align: center">
+		<div class="fading-line"></div>
+		<span class="smaller" data-lift="Loc?locid=default.footer.copyright.text">Copyright text goes here</span>
+	</footer>
+</body>
+</html>
