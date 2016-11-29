@@ -1,26 +1,45 @@
 package bootstrap.liftweb
 
-import net.liftweb._
-import util._
-import Helpers._
-
-import common._
-import http._
-import sitemap._
-import Loc._
-import mapper._
-
-import com.besterdesigns.model._
-import net.liftmodules.{FoBo,FoBoBs}
+import java.util.Date
 
 import scala.language.postfixOps
-
-import net.liftweb.http.ContentSourceRestriction._
-import net.liftweb.util.DefaultDateTimeConverter
 import scala.xml.NodeSeq
 import scala.xml.Text
+
 import com.besterdesigns.model.User
-import java.util.Date
+
+import net.liftmodules.FoBo
+import net.liftweb.common.Empty
+import net.liftweb.common.Full
+import net.liftweb.http.ContentSecurityPolicy
+import net.liftweb.http.ContentSourceRestriction
+import net.liftweb.http.GetRequest
+import net.liftweb.http.Html5Properties
+import net.liftweb.http.LiftRules
+import net.liftweb.http.LiftRulesMocker.toLiftRules
+import net.liftweb.http.NoticeType
+import net.liftweb.http.ParsePath
+import net.liftweb.http.RedirectResponse
+import net.liftweb.http.Req
+import net.liftweb.http.RewriteRequest
+import net.liftweb.http.RewriteResponse
+import net.liftweb.http.S
+import net.liftweb.http.SecurityRules
+import net.liftweb.sitemap.Loc
+import net.liftweb.sitemap.Loc.Hidden
+import net.liftweb.sitemap.Loc.If
+import net.liftweb.sitemap.Loc.LocGroup
+import net.liftweb.sitemap.Loc.PlaceHolder
+import net.liftweb.sitemap.Loc.Unless
+import net.liftweb.sitemap.Menu
+import net.liftweb.sitemap.SiteMap
+import net.liftweb.util
+import net.liftweb.util.DefaultDateTimeConverter
+import net.liftweb.util.Helpers
+import net.liftweb.util.Helpers.intToTimeSpanBuilder
+import net.liftweb.util.Props
+import net.liftweb.util.Vendor.funcToVendor
+import net.liftweb.util.Vendor.valToVendor
 
 
 /**
@@ -29,6 +48,7 @@ import java.util.Date
  */
 class Boot extends BiochargerLogMenu {
   def boot {
+    /*
     if (!DB.jndiJdbcConnAvailable_?) {
       sys.props.put("h2.implicitRelativePath", "true")
       val vendor = new StandardDBVendor(Props.get("db.driver") openOr "org.h2.Driver",
@@ -38,7 +58,8 @@ class Boot extends BiochargerLogMenu {
       LiftRules.unloadHooks.append(vendor.closeAllConnections_! _)
       DB.defineConnectionManager(util.DefaultConnectionIdentifier, vendor)
     }
-
+		*/
+    
     // where to search snippet
     LiftRules.addToPackages("com.besterdesigns")
     LiftRules.resourceNames = "MessageResource" :: Nil
@@ -55,12 +76,10 @@ class Boot extends BiochargerLogMenu {
     FoBo.API.Init=FoBo.API.FoBo1
 
     //Show the spinny image when an Ajax call starts
-    LiftRules.ajaxStart =
-      Full(() => LiftRules.jsArtifacts.show("ajax-loader").cmd)
+    LiftRules.ajaxStart = Full(() => LiftRules.jsArtifacts.show("ajax-loader").cmd)
 
     // Make the spinny image go away when it ends
-    LiftRules.ajaxEnd =
-      Full(() => LiftRules.jsArtifacts.hide("ajax-loader").cmd)
+    LiftRules.ajaxEnd = Full(() => LiftRules.jsArtifacts.hide("ajax-loader").cmd)
 
     // Force the request to be UTF-8
     LiftRules.early.append(_.setCharacterEncoding("UTF-8"))
@@ -90,12 +109,7 @@ class Boot extends BiochargerLogMenu {
         styleSources = List(ContentSourceRestriction.UnsafeInline,ContentSourceRestriction.Self)
         )))
     }
-    
-    def logout(): List[String] = {
-      User.logoutCurrentUser
-      "index" :: Nil
-    }    
-    
+        
     /**
      * Map 'home' destination to role based destination.
      */
@@ -107,15 +121,18 @@ class Boot extends BiochargerLogMenu {
         landing = "index"
       } yield landing
       
-      val dest = landing match {
+      landing match {
         case Full(page) => page :: Nil
         case _ => "login" :: Nil
       }
-      
-      println("destination "+dest)
-      dest
     }    
     
+    def logout(): List[String] = {
+      User.logoutCurrentUser
+      "login" :: Nil
+    }    
+
+    //catch 'logout', log out user and send to login page
     LiftRules.statefulRewrite.append {
         case RewriteRequest(ParsePath("logout" :: Nil, "", true, false), GetRequest, _) => RewriteResponse(logout)
     }  
@@ -145,7 +162,7 @@ class Boot extends BiochargerLogMenu {
     LiftRules.dateTimeConverter.default.set(() => dateTimeConverter)
   
     // Make a transaction span the whole HTTP request
-    S.addAround(DB.buildLoanWrapper)
+    //S.addAround(DB.buildLoanWrapper)
   }
 }
 

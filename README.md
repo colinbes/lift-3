@@ -9,6 +9,10 @@
   ```
 Stylesheet could be automated with MVN if required.
 
+#Internationalisation
+
+Shows use of using resource **MessageResource.properties** for global properties as well as **_resources.html**
+
 ## Utilises Liftweb's roundtrip for angular/server communication.
 
 In order to add a roundtrip function in your snippet, create a trait extending EmptyRoundTrip and then in turn have your snippet extend this trait.

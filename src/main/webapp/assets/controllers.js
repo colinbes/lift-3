@@ -1,5 +1,4 @@
 app.controller('SimpleRTCtrl',['$scope', function($scope){	
-	console.log("Instantiating SimpleRTCtrl")
 	$scope.lrtResModel="Click and I will do a server roundtrip";
 	$scope.lrtResModel1="Click me";
 	
@@ -33,7 +32,6 @@ app.controller('SimpleRTCtrl',['$scope', function($scope){
 }]);
 
 app.controller('ModelRTCtrl',['$scope', function($scope){
-	console.log("Instantiating ModelRTCtrl")
 	$scope.lrtResModel1="Click and I will do a server roundtrip";
 	$scope.lrtResModel2="Click RT2 to run 2nd round trip";
 	

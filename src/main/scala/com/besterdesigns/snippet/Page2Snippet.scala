@@ -1,17 +1,15 @@
 package com.besterdesigns.snippet 
 
 import scala.xml.NodeSeq
-import net.liftweb.http.RoundTripHandlerFunc
-import net.liftweb.json._
-import net.liftweb.util._
-import net.liftweb.common._
-import net.liftweb.util.Helpers._
-import net.liftweb.http.RoundTripInfo
-import net.liftweb.http._
-import net.liftweb.http.js.JE._
-import net.liftweb.http.js.JsCmds._
-import net.liftweb.http.RoundTripInfo.handledBuilder
+
 import com.besterdesigns.lib.EmptyRoundTrip
+
+import net.liftweb.http.RoundTripHandlerFunc
+import net.liftweb.http.RoundTripInfo
+import net.liftweb.http.RoundTripInfo.handledBuilder
+import net.liftweb.json.JString
+import net.liftweb.json.JValue
+import net.liftweb.json.parse
 
 //Showing using two roundtrip traits.
 trait Page2RT1 extends EmptyRoundTrip {

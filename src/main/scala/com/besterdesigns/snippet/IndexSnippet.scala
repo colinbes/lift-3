@@ -1,19 +1,22 @@
 package com.besterdesigns.snippet 
 
-import net.liftweb.http.RoundTripHandlerFunc
-import net.liftweb.json._
-import net.liftweb.util._
-import net.liftweb.common._
-import net.liftweb.util.Helpers._
-import net.liftweb.http.RoundTripInfo
-import net.liftweb.http._
-import net.liftweb.http.js.JE._
-import net.liftweb.http.js.JsCmds._
-import net.liftweb.http.RoundTripInfo.handledBuilder
-import com.besterdesigns.lib._
 import java.util.Date
+
 import org.joda.time.DateTime
+import org.joda.time.DateTimeZone
+
+import com.besterdesigns.lib.DateTimeUtils
+import com.besterdesigns.lib.EmptyRoundTrip
 import com.besterdesigns.lib.code.lib.DependencyFactory
+
+import net.liftweb.common.Box
+import net.liftweb.http.RoundTripHandlerFunc
+import net.liftweb.http.RoundTripInfo
+import net.liftweb.http.RoundTripInfo.handledBuilder
+import net.liftweb.json.JString
+import net.liftweb.json.JValue
+import net.liftweb.json.parse
+import net.liftweb.util.Helpers.StringToCssBindPromoter
 
 trait MyRT extends EmptyRoundTrip {
   
@@ -38,9 +41,13 @@ class IndexSnippet extends MyRT  {
   def render() = {
     addServices("myRTFunctions");
     
-    val mk :DateTimeConverter = LiftRules.dateTimeConverter.vend
-    val dt = mk.formatDateTime(new Date())
-    
+//    val mk :DateTimeConverter = LiftRules.dateTimeConverter.vend
+//    val dt = mk.formatDateTime(new Date())
+    val now = DateTime.now()
+    val Austin = DateTimeZone.forID("America/Chicago")
+    val dt1 = DateTimeUtils.print(now)
+    val dt2 = DateTimeUtils.print(now, Austin)
+    val dt = s"$dt1 $dt2"
     "#time *" #> dt
   } 
 }

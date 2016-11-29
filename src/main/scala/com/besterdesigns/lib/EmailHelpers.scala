@@ -1,10 +1,16 @@
 package com.besterdesigns.lib
 
-import net.liftweb.util.Mailer
-import net.liftweb.util.Mailer.{ From, Subject, To, MailBodyType }
-import net.liftweb.common.{Box, Full, Failure}
-import net.liftweb.http.S
 import scala.util.Try
+
+import net.liftweb.common.Box
+import net.liftweb.common.Failure
+import net.liftweb.common.Full
+import net.liftweb.http.S
+import net.liftweb.util.Mailer
+import net.liftweb.util.Mailer.From
+import net.liftweb.util.Mailer.MailBodyType
+import net.liftweb.util.Mailer.Subject
+import net.liftweb.util.Mailer.To
 import net.liftweb.util.Props
 
 trait EmailException extends Exception
