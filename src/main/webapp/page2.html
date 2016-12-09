@@ -7,6 +7,13 @@
 <body data-lift-content-id="main">
 	<div id="main" data-ng-app="foboDemoApp" data-lift="surround?with=default;at=content">
 		<div class="lift:Page2Snippet">
+            <div ng-controller="AccordionDemoCtrl">
+                <uib-accordion close-others="oneAtATime">
+                    <div uib-accordion-group class="panel-default" heading="Static Header, initially expanded" is-open="status.isFirstOpen" is-disabled="status.isFirstDisabled">
+                        This content is straight in the template.
+                    </div>
+                </uib-accordion>
+            </div>
 			<div data-ng-controller="ModelRTCtrl">
 				<pre>{{lrtResModel1}}</pre>
 				<button type="button" class="btn btn-default"
@@ -19,7 +26,7 @@
 					    data-ng-click="doRT2()">RT2</button>
 				<button type="button" class="btn btn-default"
 					    data-ng-click="doReset2()">Reset</button>
-			</div>			
+			</div>
 		</div>
 	</div>
 </body>

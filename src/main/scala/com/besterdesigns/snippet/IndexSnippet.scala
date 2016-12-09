@@ -4,11 +4,9 @@ import java.util.Date
 
 import org.joda.time.DateTime
 import org.joda.time.DateTimeZone
-
 import com.besterdesigns.lib.DateTimeUtils
 import com.besterdesigns.lib.EmptyRoundTrip
 import com.besterdesigns.lib.code.lib.DependencyFactory
-
 import net.liftweb.common.Box
 import net.liftweb.http.RoundTripHandlerFunc
 import net.liftweb.http.RoundTripInfo
@@ -16,11 +14,14 @@ import net.liftweb.http.RoundTripInfo.handledBuilder
 import net.liftweb.json.JString
 import net.liftweb.json.JValue
 import net.liftweb.json.parse
-import net.liftweb.util.Helpers.StringToCssBindPromoter
+import net.liftweb.util._
+import net.liftweb.util.Helpers._
+
+import scala.xml.NodeSeq
 
 trait MyRT extends EmptyRoundTrip {
   
-  protected def doSimpleRT(value :JValue, func :RoundTripHandlerFunc) :Unit = {
+  protected def doSimpleRT(value :JValue, func :RoundTripHandlerFunc): Unit = {
     func.send(JString("There and back again!!"))
   }
 
@@ -31,14 +32,14 @@ trait MyRT extends EmptyRoundTrip {
   }   
 
   private val roundtrips:List[RoundTripInfo] = List("doSimpleRT" -> doSimpleRT _, "doSomething" -> doSomething _)
-  override def getRoundTrips = super.getRoundTrips ++ roundtrips    
+  override def getRoundTrips: List[RoundTripInfo] = super.getRoundTrips ++ roundtrips
 }
 
-class IndexSnippet extends MyRT  {  
- 
+class IndexSnippet extends MyRT  {
   lazy val date: Box[Date] = DependencyFactory.inject[Date] // inject the date
-  
-  def render() = {
+
+
+  def render = {
     addServices("myRTFunctions");
     
 //    val mk :DateTimeConverter = LiftRules.dateTimeConverter.vend

@@ -30,12 +30,12 @@ trait Page2RT2 extends EmptyRoundTrip {
   }   
   
   private val roundtrips:List[RoundTripInfo] = List("page2RT2"-> doRT2 _)
-  override def getRoundTrips = super.getRoundTrips ++ roundtrips    
+  override def getRoundTrips = super.getRoundTrips ++ roundtrips
 }
 
 class Page2Snippet extends Page2RT1 with Page2RT2 { 
   def render(in:NodeSeq):NodeSeq = {
-    addServices("modelRTFunctions");
+    addServices("modelRTFunctions")
     in //no processing so return untouched.
   } 
 }

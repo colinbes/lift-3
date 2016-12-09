@@ -8,7 +8,7 @@ import scala.xml.Text
 
 import com.besterdesigns.model.User
 
-import net.liftmodules.FoBo
+import net.liftmodules.FoBoBsAPI
 import net.liftweb.common.Empty
 import net.liftweb.common.Full
 import net.liftweb.http.ContentSecurityPolicy
@@ -68,16 +68,16 @@ class Boot extends BiochargerLogMenu {
 
     //Init the FoBo - Front-End Toolkit module,
     //see http://liftweb.net/lift_modules for more info
+    /*
     FoBo.Toolkit.Init=FoBo.Toolkit.JQuery310
     FoBo.Toolkit.Init=FoBo.Toolkit.Bootstrap337
     FoBo.Toolkit.Init=FoBo.Toolkit.FontAwesome463
     FoBo.Toolkit.Init=FoBo.Toolkit.AngularJS153
     FoBo.Toolkit.Init=FoBo.Toolkit.AJSUIBootstrap0100
     FoBo.API.Init=FoBo.API.FoBo1
-
-    //Show the spinny image when an Ajax call starts
-    LiftRules.ajaxStart = Full(() => LiftRules.jsArtifacts.show("ajax-loader").cmd)
-
+    */
+    FoBoBsAPI.API.Init = FoBoBsAPI.API.Bootstrap3
+    
     // Make the spinny image go away when it ends
     LiftRules.ajaxEnd = Full(() => LiftRules.jsArtifacts.hide("ajax-loader").cmd)
 
@@ -105,11 +105,17 @@ class Boot extends BiochargerLogMenu {
     //Like the name indicates, using UnsafeInline is ... not safe. It is used here as an example.
     LiftRules.securityRules = () => {
       SecurityRules(content = Some(ContentSecurityPolicy(
-        scriptSources = List(ContentSourceRestriction.Self, ContentSourceRestriction.UnsafeInline, ContentSourceRestriction.UnsafeEval),
-        styleSources = List(ContentSourceRestriction.UnsafeInline,ContentSourceRestriction.Self)
+        defaultSources = List(ContentSourceRestriction.Self,
+                          ContentSourceRestriction.Host("""https://cdnjs.cloudflare.com""")),
+        scriptSources = List(ContentSourceRestriction.Self,
+                             ContentSourceRestriction.UnsafeInline,
+                             ContentSourceRestriction.UnsafeEval,
+                             ContentSourceRestriction.Host("""https://cdnjs.cloudflare.com""")),
+        styleSources = List(ContentSourceRestriction.UnsafeInline,
+                            ContentSourceRestriction.Self,
+                            ContentSourceRestriction.Host("""https://cdnjs.cloudflare.com"""))
         )))
-    }
-        
+    }   
     /**
      * Map 'home' destination to role based destination.
      */
@@ -134,7 +140,8 @@ class Boot extends BiochargerLogMenu {
 
     //catch 'logout', log out user and send to login page
     LiftRules.statefulRewrite.append {
-        case RewriteRequest(ParsePath("logout" :: Nil, "", true, false), GetRequest, _) => RewriteResponse(logout)
+      case RewriteRequest(ParsePath("home" :: Nil, "", true, false), GetRequest, _)   => RewriteResponse(destination)
+      case RewriteRequest(ParsePath("logout" :: Nil, "", true, false), GetRequest, _) => RewriteResponse(logout)
     }  
 
     val dateTimeConverter = new net.liftweb.util.DateTimeConverter {
