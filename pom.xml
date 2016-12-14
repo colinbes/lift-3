@@ -254,5 +254,10 @@
 			<artifactId>fobo-twbs-bootstrap3-api_3.0_2.11</artifactId>
 			<version>1.7</version>
 		</dependency>
+		<dependency>
+			<groupId>net.liftmodules</groupId>
+			<artifactId>ng_3.0_2.11</artifactId>
+			<version>0.9.3</version>
+		</dependency>
 	</dependencies>
 </project>

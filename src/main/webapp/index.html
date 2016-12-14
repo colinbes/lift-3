@@ -1,44 +1,39 @@
 <!DOCTYPE html>
 <html>
 <head>
-<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
-<title>Home</title>
+	<meta content="text/html; charset=UTF-8" http-equiv="content-type" />
+	<title>Home</title>
 </head>
 <body data-lift-content-id="main">
-	<div id="main" data-ng-app="foboDemoApp" data-lift="surround?with=default;at=content">
+	<div id="main" data-ng-app="foboDemoApp" class="application" data-lift="surround?with=default;at=content">
 		<div class="lift:IndexSnippet">
+			<script data-lift="Angular" type="text/javascript"></script>
+		  <div data-ng-controller="SimpleRTCtrl">
 			<h2>
 				<span data-lift="Loc?locid=index.welcome.label"> Welcome to your project!</span>
 			</h2>
-			<p>
-				<span id="time">Time goes here</span>
-			</p>
-			<div class="form-horizontal" role="form">
-				<div class="form-group">
-					<label for="name" class="col-sm-2 control-label">Name:</label>
-					<div class="col-sm-10">
-						<input id="name" class="form-control" type="text"
-							data-ng-model="yourName" placeholder="Enter a name here">
-					</div>
-				</div>
-			</div>
-			<h4>Hello {{yourName}}!</h4>
+	 		<p>Streaming clock: {{myClock}}</p>
+<!-- 			
+			<div data-lift="comet?type=CometExampleNG"></div>
+ -->			
+			<div data-lift="comet?type=CometExample"></div>
+			
+			<div id="testng">AngularActor {{myObj}}</div>
+			
+			<div id="test">CometActor {{myCometMessage}}</div>
+			
 			<hr>
-			<div data-ng-controller="SimpleRTCtrl">
 				<pre>{{lrtResModel}}</pre>
-				<button type="button" class="btn btn-default"
-					    data-ng-click="doSimpleLiftRT()">Simple RT</button>
-				<button type="button" class="btn btn-default"
-					    data-ng-click="doResetRT()">Reset</button>
+				<button type="button" class="btn btn-default" data-ng-click="doSimpleLiftRT()">Simple RT</button>
+				<button type="button" class="btn btn-default" data-ng-click="doResetRT()">Reset</button>
 				<hr>
 				<pre>{{lrtResModel1}}</pre>
-				<button type="button" class="btn btn-default"
-					    data-ng-click="doSomethingRT()">Something</button>
-				<button type="button" class="btn btn-default"
-					    data-ng-click="doResetSomething()">Reset</button>
+				<button type="button" class="btn btn-default" data-ng-click="doSomethingRT()">Something</button>
+				<button type="button" class="btn btn-default" data-ng-click="doResetSomething()">Reset</button>
 			</div>			
 		</div>
 	</div>
+
 </body>
 </html>
 

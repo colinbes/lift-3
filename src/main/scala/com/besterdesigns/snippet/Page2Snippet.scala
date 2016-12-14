@@ -10,6 +10,7 @@ import net.liftweb.http.RoundTripInfo.handledBuilder
 import net.liftweb.json.JString
 import net.liftweb.json.JValue
 import net.liftweb.json.parse
+import net.liftweb.common.Full
 
 //Showing using two roundtrip traits.
 trait Page2RT1 extends EmptyRoundTrip {

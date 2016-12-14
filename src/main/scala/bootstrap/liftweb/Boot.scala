@@ -1,13 +1,10 @@
 package bootstrap.liftweb
 
 import java.util.Date
-
 import scala.language.postfixOps
 import scala.xml.NodeSeq
 import scala.xml.Text
-
 import com.besterdesigns.model.User
-
 import net.liftmodules.FoBoBsAPI
 import net.liftweb.common.Empty
 import net.liftweb.common.Full
@@ -40,7 +37,8 @@ import net.liftweb.util.Helpers.intToTimeSpanBuilder
 import net.liftweb.util.Props
 import net.liftweb.util.Vendor.funcToVendor
 import net.liftweb.util.Vendor.valToVendor
-
+import scala.concurrent.ExecutionContext
+import net.liftweb.http.LiftSession
 
 /**
  * A class that's instantiated early and run.  It allows the application
@@ -48,35 +46,28 @@ import net.liftweb.util.Vendor.valToVendor
  */
 class Boot extends BiochargerLogMenu {
   def boot {
-    /*
-    if (!DB.jndiJdbcConnAvailable_?) {
-      sys.props.put("h2.implicitRelativePath", "true")
-      val vendor = new StandardDBVendor(Props.get("db.driver") openOr "org.h2.Driver",
-        Props.get("db.url") openOr
-        "jdbc:h2:lift_proto.db;AUTO_SERVER=TRUE",
-        Props.get("db.user"), Props.get("db.password"))
-      LiftRules.unloadHooks.append(vendor.closeAllConnections_! _)
-      DB.defineConnectionManager(util.DefaultConnectionIdentifier, vendor)
-    }
-		*/
-    
     // where to search snippet
     LiftRules.addToPackages("com.besterdesigns")
     LiftRules.resourceNames = "MessageResource" :: Nil
+    LiftRules.setSiteMap(sitemap());      
+     
+    //Init the FoBo - Front-End Toolkit module
+//    FoBo.Toolkit.Init=FoBo.Toolkit.JQuery310
+//    FoBo.Toolkit.Init=FoBo.Toolkit.Bootstrap337
+//    FoBo.Toolkit.Init=FoBo.Toolkit.FontAwesome463
+//    FoBo.Toolkit.Init=FoBo.Toolkit.AngularJS153
+//    FoBo.Toolkit.Init=FoBo.Toolkit.AJSUIBootstrap0100
+//    FoBo.API.Init=FoBo.API.FoBo1
     
-    LiftRules.setSiteMap(sitemap());
-
-    //Init the FoBo - Front-End Toolkit module,
-    //see http://liftweb.net/lift_modules for more info
-    /*
-    FoBo.Toolkit.Init=FoBo.Toolkit.JQuery310
-    FoBo.Toolkit.Init=FoBo.Toolkit.Bootstrap337
-    FoBo.Toolkit.Init=FoBo.Toolkit.FontAwesome463
-    FoBo.Toolkit.Init=FoBo.Toolkit.AngularJS153
-    FoBo.Toolkit.Init=FoBo.Toolkit.AJSUIBootstrap0100
-    FoBo.API.Init=FoBo.API.FoBo1
-    */
     FoBoBsAPI.API.Init = FoBoBsAPI.API.Bootstrap3
+   
+    net.liftmodules.ng.Angular.init(
+      futures = false,
+      appSelector = "[ng-app]",
+      includeJsScript = true)   
+    
+    //val context:ExecutionContext = scala.concurrent.ExecutionContext.global // Create context
+    //net.liftmodules.ng.AngularExecutionContext(context) // Tell lift-ng to use it
     
     // Make the spinny image go away when it ends
     LiftRules.ajaxEnd = Full(() => LiftRules.jsArtifacts.hide("ajax-loader").cmd)
@@ -182,8 +173,8 @@ trait BiochargerLogMenu {
   }
   val _user = Loc("User", "userMenu" :: Nil, "User", LocGroup("user"), PlaceHolder)
  
-  val test = Loc("page2", "page2" :: Nil, getLinkText("menu.page2"), LocGroup("main"), loggedIn)
-  val homeLoc = Loc("homePage", "index" :: Nil, "Home", loggedIn)
+  val test = Loc("page2", "page2" :: Nil, getLinkText("menu.page2"), LocGroup("main"))//, loggedIn)
+  val homeLoc = Loc("homePage", "index" :: Nil, "Home")//, loggedIn)
 
   val loginLoc = Loc("Login", "login" :: Nil, getLinkText("menu.user.login"), loggedOut)
   val logoutLoc = Loc("Logout", "logout" :: Nil, getLinkText("menu.user.logout"), loggedIn)
