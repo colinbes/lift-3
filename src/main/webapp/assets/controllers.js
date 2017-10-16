@@ -1,3 +1,18 @@
+function getScope() { //just for ease of testing
+	return angular.element('#controller').scope();
+}
+
+app.controller('SwitchCtrl',['$scope',function($scope) {
+	console.log("instantiate SwitchCtrl")
+	$scope.editChoice = "edit"
+	$scope.category = {
+		name : "cat1"
+	}
+	$scope.rename = {
+		category : "tag1"
+	}
+}])
+
 app.controller('SimpleRTCtrl',['$rootScope','$scope',function($rootScope, $scope) {
 		$scope.lrtResModel = "Click and I will do a server roundtrip!";
 		$scope.lrtResModel1 = "Click me";
@@ -6,9 +21,7 @@ app.controller('SimpleRTCtrl',['$rootScope','$scope',function($rootScope, $scope
 		
 		$scope.doSimpleLiftRT = function() {
 			var promise = myRTFunctions.doSimpleRT(); // call
-			// to
-			// lift
-			// function
+			// to lift function
 			return promise.then(function(data) {
 				$scope.$apply(function() {
 					$scope.lrtResModel = data;
@@ -39,10 +52,17 @@ app.controller('SimpleRTCtrl',['$rootScope','$scope',function($rootScope, $scope
 		$scope.$on('emit-object', function(e, obj) {
 				$scope.myObj = obj.name
 	  });	
+
+		function heartbeat() {
+			myRTFunctions.heartbeat()
+			setTimeout(heartbeat, 2000)
+		}
+		
+		heartbeat()
 		
 		function doClock() {
 			var promise = myRTFunctions.doClock(); // call
-	
+			
 			return promise.then(function(data) {
 				$scope.$apply(function() {
 					$scope.myClock = data;
@@ -51,7 +71,7 @@ app.controller('SimpleRTCtrl',['$rootScope','$scope',function($rootScope, $scope
 			});
 		};
 		
-//		doClock()
+		doClock()
 		
 		$(document).on('new-message', function(event, data) {
 			console.log(data)

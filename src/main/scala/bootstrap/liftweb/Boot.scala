@@ -106,7 +106,10 @@ class Boot extends BiochargerLogMenu {
                             ContentSourceRestriction.Self,
                             ContentSourceRestriction.Host("""https://cdnjs.cloudflare.com"""))
         )))
-    }   
+    }
+    
+    LiftRules.extractInlineJavaScript = true
+    
     /**
      * Map 'home' destination to role based destination.
      */
@@ -173,8 +176,9 @@ trait BiochargerLogMenu {
   }
   val _user = Loc("User", "userMenu" :: Nil, "User", LocGroup("user"), PlaceHolder)
  
-  val test = Loc("page2", "page2" :: Nil, getLinkText("menu.page2"), LocGroup("main"))//, loggedIn)
-  val homeLoc = Loc("homePage", "index" :: Nil, "Home")//, loggedIn)
+  val test = Loc("page2", "page2" :: Nil, getLinkText("menu.page2"), LocGroup("main"), loggedIn)
+  val switchTest = Loc("switch", "switch" :: Nil, "Switch", LocGroup("main"))
+  val homeLoc = Loc("homePage", "index" :: Nil, "Home", loggedIn)
 
   val loginLoc = Loc("Login", "login" :: Nil, getLinkText("menu.user.login"), loggedOut)
   val logoutLoc = Loc("Logout", "logout" :: Nil, getLinkText("menu.user.logout"), loggedIn)
@@ -187,5 +191,6 @@ trait BiochargerLogMenu {
     SiteMap(
       Menu(homeLoc), 
       Menu(test),
+      Menu(switchTest),
       Menu(_user, userMenus: _*))
 }

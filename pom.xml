@@ -12,8 +12,8 @@
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<encoding>UTF-8</encoding>
-		<lift.version>3.0</lift.version>
-		<scala.version>2.11.6</scala.version>
+		<lift.version>3.1.0</lift.version>
+		<scala.version>2.11.11</scala.version>
 		<!-- Common plugin settings -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>${project.build.sourceEncoding}</project.reporting.outputEncoding>
@@ -22,7 +22,7 @@
 		<vscaladoc.links.liftweb.pathsufix>scaladocs/</vscaladoc.links.liftweb.pathsufix>
 		<vscaladoc.links.liftweb.baseurl>https://oss.sonatype.org/content/groups/scala-tools/liftweb</vscaladoc.links.liftweb.baseurl>
 		<logback-classic.version>1.1.7</logback-classic.version>
-		<jetty.http.port>8080</jetty.http.port>		
+		<jetty.http.port>8082</jetty.http.port>		
 	</properties>
 
 	<pluginRepositories>
@@ -229,7 +229,7 @@
 		<dependency>
 			<groupId>net.liftweb</groupId>
 			<artifactId>lift-webkit_2.11</artifactId>
-			<version>3.0</version>
+			<version>${lift.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.scala-lang</groupId>
@@ -256,8 +256,8 @@
 		</dependency>
 		<dependency>
 			<groupId>net.liftmodules</groupId>
-			<artifactId>ng_3.0_2.11</artifactId>
-			<version>0.9.3</version>
+			<artifactId>ng_3.1_2.11</artifactId>
+			<version>0.10.2</version>
 		</dependency>
 	</dependencies>
 </project>

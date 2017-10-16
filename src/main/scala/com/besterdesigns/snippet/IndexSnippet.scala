@@ -21,8 +21,20 @@ import net.liftmodules.ng.AngularActor
 import net.liftweb.common.Full
 import net.liftweb.http.LiftSession
 import net.liftweb.http.SessionVar
+import net.liftweb.common.Empty
+
+object SessionHeatbeat extends SessionVar[Box[Long]](Empty)
 
 trait MyRT extends EmptyRoundTrip {
+  
+  private var heartbeat: Box[Long] = Full(System.currentTimeMillis)
+  
+  protected def heartBeat(value :JValue, func :RoundTripHandlerFunc): Unit = {
+    heartbeat = Full(System.currentTimeMillis) 
+    println("heartbeat "+heartbeat)
+    func.send(JString("OK"))
+  }
+  
   protected def doSimpleRT(value :JValue, func :RoundTripHandlerFunc): Unit = {
     func.send(JString("There and back again!!"))
   }
@@ -35,17 +47,27 @@ trait MyRT extends EmptyRoundTrip {
   
   protected def doClock(value: JValue, onChange: RoundTripHandlerFunc):Unit = {
     var count = 0
-
     def doIt() {
-      count += 1  
-      onChange.send(JString(""+count))
-      println("doIt clock "+count)
-      Schedule.schedule(doIt, 1.second)
+      
+      val tick = System.currentTimeMillis()
+      
+      count += 1 
+      heartbeat match {
+        case Full(ts) if (tick < ts+5000) => {
+          onChange.send(JString(""+count))
+          println("doIt clock "+count)
+          Schedule.schedule(doIt, 1.second)          
+        }
+        case _ => {
+          onChange.send(JString("failed "+count))          
+          println("failed doIt clock "+count)
+        }
+      }
     }    
     doIt()
   }
   
-  private val roundtrips:List[RoundTripInfo] = List("doClock" -> doClock _, "doSimpleRT" -> doSimpleRT _, "doSomething" -> doSomething _)
+  private val roundtrips:List[RoundTripInfo] = List("heartbeat" -> heartBeat _, "doClock" -> doClock _, "doSimpleRT" -> doSimpleRT _, "doSomething" -> doSomething _)
   override def getRoundTrips: List[RoundTripInfo] = super.getRoundTrips ++ roundtrips  
 }
 

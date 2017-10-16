@@ -26,7 +26,7 @@ class CometExample extends CometActor {
   
   override def localSetup() = {
     println("CometExample: local setup")
-  }
+  } 
   
   override def lowPriority = {
     case ("test", msg:String) => {
