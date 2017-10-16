@@ -1,3 +1,14 @@
+# Liftweb 3 ng-switch csssel binding issue demonstration
+Added page 'switch' to demonstrate issue with csssel binding to button when button is within ng-switch statement.
+
+On startup, point browser to http://localhost:8082 and click on 'switch' in navigation bar.
+
+Page will show radio buttons to toggle ng-switch to display categories and rename tags. To right of buttons there is 'Save' button which is bound via csssel.
+
+Right below the radio buttons is a 'Save' button that is only there to demonstrate that binding via csssel to button outside of ng-switch does work.
+
+Note that csssel binding in lift 2.6 does work and is being used in production project.
+
 # Liftweb 3.0, Angular and Bootstrap Starter Template
 
 - build system: MVN
