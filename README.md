@@ -11,3 +11,5 @@ To run use `mvn jetty:run`
 Testing done on Chrome browser and both functions work with network performance set to **online**.
 
 To demonstrate failure set network performance to Fast 3G or Slow 3G
+
+Note: Clicking `Get Data Future several times` (10 times) rapidly will return data for many of the clicks (I haven't confirmed whether it returns response for each click or not). Which is different behavior to single click.
