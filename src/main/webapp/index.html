@@ -5,32 +5,19 @@
 	<title>Home</title>
 </head>
 <body data-lift-content-id="main">
-	<div id="main" data-ng-app="foboDemoApp" class="application" data-lift="surround?with=default;at=content">
-		<div class="lift:IndexSnippet">
+	<div id="main" ng-app="myApp" class="application" data-lift="surround?with=default;at=content">
+		<div id="controller" data-ng-controller="SimpleCtrl" class="lift:IndexSnippet.index">
+			<!-- <div id="mycomet" data-lift="comet?type=CometExample;name=comet-exampler"></div> -->
 			<script data-lift="Angular" type="text/javascript"></script>
-		  <div data-ng-controller="SimpleRTCtrl">
+			<script id="angularscript" type="text/javascript"></script>
 			<h2>
 				<span data-lift="Loc?locid=index.welcome.label"> Welcome to your project!</span>
 			</h2>
-	 		<p>Streaming clock: {{myClock}}</p>
-<!-- 			
-			<div data-lift="comet?type=CometExampleNG"></div>
-			<div data-lift="comet?type=CometExample"></div>
-			
-			<div id="testng">AngularActor {{myObj}}</div>
-			
-			<div id="test">CometActor {{myCometMessage}}</div>
- -->			
-			
-			<hr>
-				<pre>{{lrtResModel}}</pre>
-				<button type="button" class="btn btn-default" data-ng-click="doSimpleLiftRT()">Simple RT</button>
-				<button type="button" class="btn btn-default" data-ng-click="doResetRT()">Reset</button>
-				<hr>
-				<pre>{{lrtResModel1}}</pre>
-				<button type="button" class="btn btn-default" data-ng-click="doSomethingRT()">Something</button>
-				<button type="button" class="btn btn-default" data-ng-click="doResetSomething()">Reset</button>
-			</div>			
+			<div>
+				<button class="btn btn-default" ng-click="getDataFuture('future')">Get Data Future</button>
+				<button class="btn btn-default" ng-click="getDataSync('sync')">Get Data Sync</button>
+				<label>TestData <span>{{testdata}}</span></label>
+			</div>
 		</div>
 	</div>
 

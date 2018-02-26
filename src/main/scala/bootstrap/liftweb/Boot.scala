@@ -4,7 +4,6 @@ import java.util.Date
 import scala.language.postfixOps
 import scala.xml.NodeSeq
 import scala.xml.Text
-import com.besterdesigns.model.User
 import net.liftmodules.FoBoBsAPI
 import net.liftweb.common.Empty
 import net.liftweb.common.Full
@@ -75,9 +74,6 @@ class Boot extends BiochargerLogMenu {
     // Force the request to be UTF-8
     LiftRules.early.append(_.setCharacterEncoding("UTF-8"))
 
-    // What is the function to test if a user is logged in?
-    LiftRules.loggedInTest = Full(() => User.loggedIn_?)
-
     // Use HTML5 for rendering
     LiftRules.htmlProperties.default.set((r: Req) =>
       new Html5Properties(r.userAgent))
@@ -110,34 +106,6 @@ class Boot extends BiochargerLogMenu {
 
     LiftRules.extractInlineJavaScript = true
 
-    /**
-     * Map 'home' destination to role based destination.
-     */
-    def destination(): List[String] = {
-
-      val landing = for {
-        userInfo <- User.currentUser
-        //do whatever to determine landing page
-        landing = "index"
-      } yield landing
-
-      landing match {
-        case Full(page) => page :: Nil
-        case _ => "login" :: Nil
-      }
-    }
-
-    def logout(): List[String] = {
-      User.logoutCurrentUser
-      "login" :: Nil
-    }
-
-    //catch 'logout', log out user and send to login page
-    LiftRules.statefulRewrite.append {
-      case RewriteRequest(ParsePath("home" :: Nil, "", true, false), GetRequest, _)   => RewriteResponse(destination)
-      case RewriteRequest(ParsePath("logout" :: Nil, "", true, false), GetRequest, _) => RewriteResponse(logout)
-    }
-
     val dateTimeConverter = new net.liftweb.util.DateTimeConverter {
       def sdfDateTime = {
 //        val sdf = new java.text.SimpleDateFormat("YYYY-MM-DD'T'HH:MM:SS.sssZ")
@@ -168,29 +136,12 @@ class Boot extends BiochargerLogMenu {
 }
 
 trait BiochargerLogMenu {
-  val loggedIn = If(() => User.loggedIn_?, () => RedirectResponse("/login"))
-  val loggedOut = Unless(() => User.loggedIn_?, () => RedirectResponse("/index"))
-
   def getLinkText(reference: String): NodeSeq = {
     S.loc(reference, Text(reference))
   }
-  val _user = Loc("User", "userMenu" :: Nil, "User", LocGroup("user"), PlaceHolder)
-
-  val test = Loc("page2", "page2" :: Nil, getLinkText("menu.page2"), LocGroup("main"), loggedIn)
-  val switchTest = Loc("switch", "switch" :: Nil, "Switch", LocGroup("main"))
-  val homeLoc = Loc("homePage", "index" :: Nil, "Home", loggedIn)
-
-  val loginLoc = Loc("Login", "login" :: Nil, getLinkText("menu.user.login"), loggedOut)
-  val logoutLoc = Loc("Logout", "logout" :: Nil, getLinkText("menu.user.logout"), loggedIn)
-  val internalServerErrorLoc = Loc("500", "500" :: Nil, "Server Error", Hidden)
-
-  val userMenus = List(Menu(loginLoc), Menu(logoutLoc))
-
-  // Build SiteMap
+  val indexLoc = Loc("Index", "index" :: Nil, "index", Hidden);
   def sitemap() =
     SiteMap(
-      Menu(homeLoc),
-      Menu(test),
-      Menu(switchTest),
-      Menu(_user, userMenus: _*))
+      Menu(indexLoc)
+      )
 }

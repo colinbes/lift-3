@@ -22,7 +22,7 @@
 		<vscaladoc.links.liftweb.pathsufix>scaladocs/</vscaladoc.links.liftweb.pathsufix>
 		<vscaladoc.links.liftweb.baseurl>https://oss.sonatype.org/content/groups/scala-tools/liftweb</vscaladoc.links.liftweb.baseurl>
 		<logback-classic.version>1.1.7</logback-classic.version>
-		<jetty.http.port>8082</jetty.http.port>		
+		<jetty.http.port>8080</jetty.http.port>		
 	</properties>
 
 	<pluginRepositories>

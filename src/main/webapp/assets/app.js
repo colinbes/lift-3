@@ -1,1 +1,6 @@
-var app = angular.module('foboDemoApp',['ngAnimate', 'ui.bootstrap', 'lift-ng']);
+var myApp = angular.module('myApp',[
+    'ngAnimate', 
+    'ui.bootstrap', 
+    'lift-ng', 
+    'bc.services',
+    'bc.controllers']);
