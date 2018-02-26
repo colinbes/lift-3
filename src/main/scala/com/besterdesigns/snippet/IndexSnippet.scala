@@ -25,6 +25,7 @@ object IndexSnippet extends DispatchSnippet with FetcherJsonSerializers {
       renderIfNotAlreadyDefined(angular.module("bc.services")
       .factory("indexService", jsObjFactory()
         .defParamToFutureAny("getDataFuture", (tag:String) => IndexService.getTestDataFuture(tag))
+        .defParamToAny("getDataDelayed", (delay:String) => IndexService.getTestDataDelayed("delayed", delay.toLong))
         .defParamToAny("getData", (tag:String) => IndexService.getTestData(tag))
       )
     )}

@@ -6,7 +6,8 @@ var bcController = angular.module('bc.controllers', []);
 
 bcController.controller('SimpleCtrl',['$rootScope','$scope', 'indexService', function($rootScope, $scope, indexService) {
 	$scope.testdata = ""
-
+	$scope.waitTime = 1000
+	
 	$scope.getDataFuture = function(tag) {
 		$scope.testdata = "waiting"
 		indexService.getDataFuture(tag).then(function(res){
@@ -25,4 +26,13 @@ bcController.controller('SimpleCtrl',['$rootScope','$scope', 'indexService', fun
 			console.error("error", err)
 		})
 	}
+	$scope.getDataDelayed = function(tag) {
+		$scope.testdata = "waiting"
+		indexService.getDataDelayed(tag).then(function(res){
+			console.log("Got delayed data", res)
+			$scope.testdata = res
+		}, function(err){
+			console.error("delay data error", err)
+		})
+	}	
 } ]);

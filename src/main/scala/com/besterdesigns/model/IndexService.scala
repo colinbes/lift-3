@@ -22,6 +22,21 @@ object IndexService extends FetcherJsonSerializers{
     s"$tag ${DateTime.now()}"
   }
 
+  def getTestDataDelayed(tag: String, waitTime:Long)(implicit ec: ExecutionContext) = {
+    def delay = Future {
+      Thread.sleep(waitTime)
+    }
+
+    val future = getTestDataFuture(tag)
+
+    val resFuture = for {
+      res <- future
+      wait <- delay
+    } yield res
+
+    Full(s"${Await.result(resFuture, 10.seconds)} delayed $waitTime milliseconds")
+  }
+
   def getTestData(tag: String)(implicit ec: ExecutionContext) =  {
     Full(Await.result(getTestDataFuture(tag), 2.seconds))
   }

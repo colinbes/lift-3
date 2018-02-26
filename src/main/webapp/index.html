@@ -13,10 +13,24 @@
 			<h2>
 				<span data-lift="Loc?locid=index.welcome.label"> Welcome to your project!</span>
 			</h2>
-			<div>
-				<button class="btn btn-default" ng-click="getDataFuture('future')">Get Data Future</button>
-				<button class="btn btn-default" ng-click="getDataSync('sync')">Get Data Sync</button>
-				<label>TestData <span>{{testdata}}</span></label>
+			<div class="row">
+				<div class="col-sm-6" style="border-right: 1px solid grey">
+					<div>
+						<button class="btn btn-default" ng-click="getDataFuture('future')">Get Data Future</button>
+					</div>
+					<div style="margin-top:10px;">
+						<button class="btn btn-default" ng-click="getDataSync('sync')">Get Data Sync</button>
+					</div>
+					<div style="margin-top:10px;">
+						<label for="delay"><input ng-model="waitTime"></label><button class="btn btn-default" ng-click="getDataDelayed(waitTime)">Get Data Delayed</button>		
+					</div>			
+				</div>
+				<div class="col-sm-6">
+					<p style="margin-top:10px;">
+						<label>TestData Response: <span>{{testdata}}</span></label>
+					</p>								
+				</div>
+				
 			</div>
 		</div>
 	</div>
