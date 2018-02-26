@@ -49,8 +49,8 @@ class Boot extends BiochargerLogMenu {
     // where to search snippet
     LiftRules.addToPackages("com.besterdesigns")
     LiftRules.resourceNames = "MessageResource" :: Nil
-    LiftRules.setSiteMap(sitemap());      
-     
+    LiftRules.setSiteMap(sitemap());
+
     //Init the FoBo - Front-End Toolkit module
 //    FoBo.Toolkit.Init=FoBo.Toolkit.JQuery310
 //    FoBo.Toolkit.Init=FoBo.Toolkit.Bootstrap337
@@ -58,17 +58,17 @@ class Boot extends BiochargerLogMenu {
 //    FoBo.Toolkit.Init=FoBo.Toolkit.AngularJS153
 //    FoBo.Toolkit.Init=FoBo.Toolkit.AJSUIBootstrap0100
 //    FoBo.API.Init=FoBo.API.FoBo1
-    
+
     FoBoBsAPI.API.Init = FoBoBsAPI.API.Bootstrap3
-   
+
     net.liftmodules.ng.Angular.init(
-      futures = false,
+      futures = true,
       appSelector = "[ng-app]",
-      includeJsScript = true)   
-    
+      includeJsScript = true)
+
     //val context:ExecutionContext = scala.concurrent.ExecutionContext.global // Create context
     //net.liftmodules.ng.AngularExecutionContext(context) // Tell lift-ng to use it
-    
+
     // Make the spinny image go away when it ends
     LiftRules.ajaxEnd = Full(() => LiftRules.jsArtifacts.hide("ajax-loader").cmd)
 
@@ -81,7 +81,7 @@ class Boot extends BiochargerLogMenu {
     // Use HTML5 for rendering
     LiftRules.htmlProperties.default.set((r: Req) =>
       new Html5Properties(r.userAgent))
-    
+
     LiftRules.noticesAutoFadeOut.default.set((notices: NoticeType.Value) => {
       notices match {
         case NoticeType.Notice  => Full((5.seconds, 5.seconds))
@@ -89,7 +89,7 @@ class Boot extends BiochargerLogMenu {
         case NoticeType.Warning => Full((5.seconds, 5.seconds))
         case _                  => Empty
       }
-    })    
+    })
 
     //Lift CSP settings see http://content-security-policy.com/ and
     //Lift API for more information.
@@ -107,9 +107,9 @@ class Boot extends BiochargerLogMenu {
                             ContentSourceRestriction.Host("""https://cdnjs.cloudflare.com"""))
         )))
     }
-    
+
     LiftRules.extractInlineJavaScript = true
-    
+
     /**
      * Map 'home' destination to role based destination.
      */
@@ -120,23 +120,23 @@ class Boot extends BiochargerLogMenu {
         //do whatever to determine landing page
         landing = "index"
       } yield landing
-      
+
       landing match {
         case Full(page) => page :: Nil
         case _ => "login" :: Nil
       }
-    }    
-    
+    }
+
     def logout(): List[String] = {
       User.logoutCurrentUser
       "login" :: Nil
-    }    
+    }
 
     //catch 'logout', log out user and send to login page
     LiftRules.statefulRewrite.append {
       case RewriteRequest(ParsePath("home" :: Nil, "", true, false), GetRequest, _)   => RewriteResponse(destination)
       case RewriteRequest(ParsePath("logout" :: Nil, "", true, false), GetRequest, _) => RewriteResponse(logout)
-    }  
+    }
 
     val dateTimeConverter = new net.liftweb.util.DateTimeConverter {
       def sdfDateTime = {
@@ -161,7 +161,7 @@ class Boot extends BiochargerLogMenu {
       def parseTime(s: String) = DefaultDateTimeConverter.parseTime(s)
     }
     LiftRules.dateTimeConverter.default.set(() => dateTimeConverter)
-  
+
     // Make a transaction span the whole HTTP request
     //S.addAround(DB.buildLoanWrapper)
   }
@@ -170,12 +170,12 @@ class Boot extends BiochargerLogMenu {
 trait BiochargerLogMenu {
   val loggedIn = If(() => User.loggedIn_?, () => RedirectResponse("/login"))
   val loggedOut = Unless(() => User.loggedIn_?, () => RedirectResponse("/index"))
-  
+
   def getLinkText(reference: String): NodeSeq = {
     S.loc(reference, Text(reference))
   }
   val _user = Loc("User", "userMenu" :: Nil, "User", LocGroup("user"), PlaceHolder)
- 
+
   val test = Loc("page2", "page2" :: Nil, getLinkText("menu.page2"), LocGroup("main"), loggedIn)
   val switchTest = Loc("switch", "switch" :: Nil, "Switch", LocGroup("main"))
   val homeLoc = Loc("homePage", "index" :: Nil, "Home", loggedIn)
@@ -183,13 +183,13 @@ trait BiochargerLogMenu {
   val loginLoc = Loc("Login", "login" :: Nil, getLinkText("menu.user.login"), loggedOut)
   val logoutLoc = Loc("Logout", "logout" :: Nil, getLinkText("menu.user.logout"), loggedIn)
   val internalServerErrorLoc = Loc("500", "500" :: Nil, "Server Error", Hidden)
- 
-  val userMenus = List(Menu(loginLoc), Menu(logoutLoc))  
+
+  val userMenus = List(Menu(loginLoc), Menu(logoutLoc))
 
   // Build SiteMap
   def sitemap() =
     SiteMap(
-      Menu(homeLoc), 
+      Menu(homeLoc),
       Menu(test),
       Menu(switchTest),
       Menu(_user, userMenus: _*))
