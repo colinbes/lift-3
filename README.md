@@ -1,51 +1,27 @@
-# Liftweb 3.0, Angular and Bootstrap Starter Template
+# Liftweb 3.0, dynamic menu example
 
 - build system: MVN
 - IDE: Eclipse (Scala IDE) 
 - less file *mystyles.less* is used to manage and build the mystyles.css file 
-  ```
-  cd <project>/src/main/webapp/assets/css
-  lessc ../less/mystyles.less mystyles.css
-  ```
+    css file is not version controlled so will need to be generated.
+    ```
+    cd <project>/src/main/webapp/assets/css
+    lessc ../less/mystyles.less mystyles.css
+    ```
 Stylesheet could be automated with MVN if required.
-
-#Internationalisation
-
-Shows use of using resource **MessageResource.properties** for global properties as well as **_resources.html**
-
-## Utilises Liftweb's roundtrip for angular/server communication.
-
-In order to add a roundtrip function in your snippet, create a trait extending EmptyRoundTrip and then in turn have your snippet extend this trait.
-
-In your snippet extending trait EmptyRoundTrip call `addServices("myRTFunctions");` where **myRTFunctions** is the name of RoundTrip functions for access in client side controller/service.
-
-Example trait for RoundTrip providing server calls **doSimpleRT** and **doSomething**
-
-```
-trait MyRT extends EmptyRoundTrip {
-  
-  protected def doSimpleRT(value :JValue, func :RoundTripHandlerFunc) :Unit = {
-    func.send(JString("There and back again!!"))
-  }
-
-  protected def doSomething(value :JValue, func :RoundTripHandlerFunc) :Unit = {
-    val response = """{"name":"Index page"}"""
-    val json = parse(response);
-    func.send(json)
-  }   
-
-  private val roundtrips:List[RoundTripInfo] = {
-    List("doSimpleRT" -> doSimpleRT _, "doSomething" -> doSomething _)
-  }
-
-  override def getRoundTrips = super.getRoundTrips ++ roundtrips    
-}
-
-class IndexSnippet extends MyRT {
-  ...
-}
-```
 
 Note, this template is mix of various different examples found on the web with my own edits and spin on a Liftweb template that I typically use.
 
-To login, use a valid email address and password of *password*, **Note** email is not used anywhere, it's simply a placeholder.
+To login, use any valid email format for email address and password of *password*, **Note** email is not used anywhere, it's simply a placeholder.
+
+Once logged in there will be an additional **Eula** menu item under **User** on top right. Inspecting Eula html code shows issue discussed of nested anchors. 
+
+Inspection should show html code:
+```
+<li><a href="/userEula"></a><a href="api/eula/abc@abc.non" target="_blank">Eula</a></li>
+```
+ in safari/chrome and 
+```
+<li><a href="..."><a href="api/eula/id">Eula</a></a></li>
+```
+causing error.

@@ -40,6 +40,7 @@ import net.liftweb.util.Helpers.intToTimeSpanBuilder
 import net.liftweb.util.Props
 import net.liftweb.util.Vendor.funcToVendor
 import net.liftweb.util.Vendor.valToVendor
+import com.besterdesigns.lib.BackendServer
 
 
 /**
@@ -99,6 +100,8 @@ class Boot extends BiochargerLogMenu {
         case _                  => Empty
       }
     })    
+    
+    BackendServer.init()
 
     //Lift CSP settings see http://content-security-policy.com/ and
     //Lift API for more information.
@@ -170,24 +173,35 @@ trait BiochargerLogMenu {
   val loggedIn = If(() => User.loggedIn_?, () => RedirectResponse("/login"))
   val loggedOut = Unless(() => User.loggedIn_?, () => RedirectResponse("/index"))
   
+  def eulaLink(dflt: String): NodeSeq = {
+    val eula = for {
+      user <- User.currentUser
+      id = user.email
+      dest = s"api/eula/${id}"
+    } yield <a href={dest} target="_blank">{S.loc(dflt, Text(dflt))}</a>
+
+    eula match {
+      case Full(ref) => ref
+      case _         => NodeSeq.Empty
+    }
+  }
+  
   def getLinkText(reference: String): NodeSeq = {
     S.loc(reference, Text(reference))
   }
   val _user = Loc("User", "userMenu" :: Nil, "User", LocGroup("user"), PlaceHolder)
- 
-  val test = Loc("page2", "page2" :: Nil, getLinkText("menu.page2"), LocGroup("main"), loggedIn)
+   val eulaLoc = Loc("UserEula", "userEula" :: Nil, eulaLink("Eula"), loggedIn)
   val homeLoc = Loc("homePage", "index" :: Nil, "Home", loggedIn)
 
   val loginLoc = Loc("Login", "login" :: Nil, getLinkText("menu.user.login"), loggedOut)
   val logoutLoc = Loc("Logout", "logout" :: Nil, getLinkText("menu.user.logout"), loggedIn)
   val internalServerErrorLoc = Loc("500", "500" :: Nil, "Server Error", Hidden)
  
-  val userMenus = List(Menu(loginLoc), Menu(logoutLoc))  
+  val userMenus = List(Menu(loginLoc), Menu(eulaLoc), Menu(logoutLoc))  
 
   // Build SiteMap
   def sitemap() =
     SiteMap(
       Menu(homeLoc), 
-      Menu(test),
       Menu(_user, userMenus: _*))
 }

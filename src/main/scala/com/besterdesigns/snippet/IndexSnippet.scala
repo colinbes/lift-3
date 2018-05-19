@@ -34,12 +34,13 @@ trait MyRT extends EmptyRoundTrip {
   override def getRoundTrips = super.getRoundTrips ++ roundtrips    
 }
 
-class IndexSnippet extends MyRT  {  
+//class IndexSnippet extends MyRT  {  
+class IndexSnippet  {  
  
   lazy val date: Box[Date] = DependencyFactory.inject[Date] // inject the date
   
   def render() = {
-    addServices("myRTFunctions");
+//    addServices("myRTFunctions");
     
 //    val mk :DateTimeConverter = LiftRules.dateTimeConverter.vend
 //    val dt = mk.formatDateTime(new Date())

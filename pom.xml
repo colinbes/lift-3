@@ -4,16 +4,16 @@
 	<modelVersion>4.0.0</modelVersion>
 	<version>1.0.0</version>
 	<packaging>war</packaging>
-	<name>Lift3</name>
-	<inceptionYear>2016</inceptionYear>
+	<name>Lift3-dynmenu</name>
+	<inceptionYear>2018</inceptionYear>
 	<groupId>com.besterdesigns</groupId>
 	<artifactId>liftweb</artifactId>
 	<properties>
 		<maven.compiler.source>1.8</maven.compiler.source>
 		<maven.compiler.target>1.8</maven.compiler.target>
 		<encoding>UTF-8</encoding>
-		<lift.version>3.0</lift.version>
-		<scala.version>2.11.6</scala.version>
+		<lift.version>3.1.0</lift.version>
+		<scala.version>2.11.11</scala.version>
 		<!-- Common plugin settings -->
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>${project.build.sourceEncoding}</project.reporting.outputEncoding>
@@ -21,7 +21,7 @@
 		<maven.scaladoc.vscaladocVersion>1.2-m1</maven.scaladoc.vscaladocVersion>
 		<vscaladoc.links.liftweb.pathsufix>scaladocs/</vscaladoc.links.liftweb.pathsufix>
 		<vscaladoc.links.liftweb.baseurl>https://oss.sonatype.org/content/groups/scala-tools/liftweb</vscaladoc.links.liftweb.baseurl>
-		<logback-classic.version>1.1.7</logback-classic.version>
+		<logback-classic.version>1.2.3</logback-classic.version>
 		<jetty.http.port>8080</jetty.http.port>		
 	</properties>
 
@@ -84,7 +84,7 @@
 			<plugin>
 				<groupId>net.alchim31.maven</groupId>
 				<artifactId>scala-maven-plugin</artifactId>
-				<version>3.2.1</version>
+				<version>3.2.2</version>
 				<configuration>
 					<recompileMode>incremental</recompileMode>
 				</configuration>

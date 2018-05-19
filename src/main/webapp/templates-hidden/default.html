@@ -25,13 +25,30 @@
 <script src="/assets/controllers.js"></script>
 </head>
 <body>
-	<span data-lift='embed?what=_embeddedTopNavbar'>Embedding the TopNavbar here</span>
-	<div style="position: absolute; top: 50%; left: 50%">
-		<img alt="" id="ajax-loader" style="z-index: 1; display: none; margin-bottom: 0px; margin-left: 5px" src="/assets/images/ajax-loader.gif" />
-	</div>
+	<div id="headerMain" class="container-fluid">
+		<div class="print-top hidden-print hidden-xs">
+		  <div style="position: absolute; top: 50%; left: 50%">
+			<img alt="" id="ajax-loader" style="z-index: 1; display: none; margin-bottom: 0px; margin-left: 5px"
+			  src="/assets/images/ajax-loader.gif" />
+		  </div>
+		</div>
+	  <span data-lift='embed?what=_embeddedNotices'>embed notices</span>    	
+		<nav class="navbar navbar-ab navbar-default grid noprint" role="navigation">
+		  <div class="navbar-header">
+			<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-nav">
+			  <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span>
+			</button>
+			<a class="navbar-brand" href="/index"><lift:loc locid="dashboard">Dashboard</lift:loc></a>
+		  </div>
 	
-	<span data-lift='embed?what=_embeddedNotices'>embed notices</span>
-	
+		  <div class="collapse navbar-collapse" id="main-nav">
+			<span data-lift="FoBo.Bs3Navbar.builder?group=main"></span>
+			<div class="no-caret">
+			  <span data-lift="FoBo.Bs3Navbar.builderPullRight?group=user"></span>
+			</div>
+		  </div>
+		</nav>
+	  </div>
  	<div class="container-fluid">
 		<div id="content" class="content-body">The main content will get bound here</div>
 	</div>
