@@ -60,14 +60,15 @@ class Boot extends BiochargerLogMenu {
 
     FoBoBsAPI.API.Init = FoBoBsAPI.API.Bootstrap3
 
+    val context:ExecutionContext = scala.concurrent.ExecutionContext.global
+    net.liftmodules.ng.AngularExecutionContext(context)
+
     net.liftmodules.ng.Angular.init(
       futures = true,
       appSelector = "[ng-app]",
       includeJsScript = true)
 
-    //val context:ExecutionContext = scala.concurrent.ExecutionContext.global // Create context
-    //net.liftmodules.ng.AngularExecutionContext(context) // Tell lift-ng to use it
-
+    
     // Make the spinny image go away when it ends
     LiftRules.ajaxEnd = Full(() => LiftRules.jsArtifacts.hide("ajax-loader").cmd)
 
